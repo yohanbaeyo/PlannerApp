@@ -6,39 +6,47 @@
     android:layout_height="match_parent"
     tools:context=".AddActivity">
 
-    <EditText
-        android:id="@+id/titleInput"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Input Title"
-        tools:layout_editor_absoluteX="100dp"
-        tools:layout_editor_absoluteY="201dp" />
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.054">
 
-    <Button
-        android:id="@+id/SAVE"
-        android:layout_width="211dp"
-        android:layout_height="45dp"
-        android:text="SAVE"
-        tools:layout_editor_absoluteX="99dp"
-        tools:layout_editor_absoluteY="409dp" />
+        <EditText
+            android:id="@+id/titleInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="260dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Title"/>
 
-    <EditText
-        android:id="@+id/startDateInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="date"
-        tools:layout_editor_absoluteX="100dp"
-        tools:layout_editor_absoluteY="277dp" />
+        <EditText
+            android:id="@+id/startDateInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="date"
+            android:hint="Start Date"/>
 
-    <EditText
-        android:id="@+id/endDateInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="date"
-        tools:layout_editor_absoluteX="99dp"
-        tools:layout_editor_absoluteY="343dp" />
+        <EditText
+            android:id="@+id/endDateInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="date"
+            android:hint="End Date"/>
+
+        <Button
+            android:id="@+id/saveBtn"
+            android:layout_width="211dp"
+            android:layout_height="45dp"
+            android:text="SAVE" />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

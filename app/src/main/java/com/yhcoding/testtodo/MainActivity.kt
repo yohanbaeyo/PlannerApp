@@ -31,28 +31,30 @@ class MainActivity : AppCompatActivity() {
 
         todoItemDb = ToDo_Item_DB.getInstance(this)
         CoroutineScope(Dispatchers.IO).launch {
-            todoItems.clear()
-            todoItems.addAll(todoItemDb?.todo_Item_Dao()!!.getAll())
+            refreshRecyclerView()
         }
-        refreshRecyclerView()
-
-        for(i in 0 until n) {
-            todoItems.add(ToDo_Item("$i", Instant.now().epochSecond, Instant.now().epochSecond))
-        }
-        refreshRecyclerView()
 
         val actionBar: ActionBar? = supportActionBar
         actionBar?.hide()
 
         binding.floatingActionButton.setOnClickListener {
-            val intent = Intent(applicationContext, AddActivity::class.java)
+            val intent = Intent(this, AddActivity::class.java)
             startActivity(intent)
+
         }
     }
 
     private fun refreshRecyclerView() {
         adapter.notifyDataSetChanged()
+        todoItems.clear()
+        todoItems.addAll(todoItemDb?.todo_Item_Dao()!!.getAll())
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
+    }
+
+    override fun onDestroy() {
+        todoItemDb?.destroyInstance()
+        todoItemDb = null
+        super.onDestroy()
     }
 }

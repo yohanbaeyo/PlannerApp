@@ -23,9 +23,8 @@ abstract class ToDo_Item_DB :RoomDatabase() {
             }
             return INSTANCE
         }
-
-        fun destroyInstance() {
-            INSTANCE = null
-        }
+    }
+    fun destroyInstance() {
+        INSTANCE = null
     }
 }
