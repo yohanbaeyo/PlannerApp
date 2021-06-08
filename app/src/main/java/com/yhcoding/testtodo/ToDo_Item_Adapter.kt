@@ -24,12 +24,27 @@ class ToDo_Item_Adapter(private val items:ArrayList<ToDo_Item>) : RecyclerView.A
             Toast.makeText(it.context, "Clicked" + item.title, Toast.LENGTH_SHORT).show()
         }
         holder.binding.titleText.text=items[position].title
-        holder.binding.startDate.text= Instant.ofEpochSecond(items[position].startDate).atZone(ZoneId.of("UTC")).toLocalDate().toString()
-        holder.binding.endDate.text=Instant.ofEpochSecond(items[position].endDate).atZone(ZoneId.of("UTC")).toLocalDate().toString()
+        holder.binding.startDate.text= Instant.ofEpochSecond(items[position].startDate).atZone(ZoneId.of("Asia/Seoul")).toLocalDate().toString()
+        holder.binding.endDate.text=Instant.ofEpochSecond(items[position].endDate).atZone(ZoneId.of("Asia/Seoul")).toLocalDate().toString()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToDo_Item_ViewHolder{
         val binding = TodoItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ToDo_Item_ViewHolder(binding)
+    }
+
+    fun swapItems(fromPosition:Int, toPosition:Int) {
+        val item:ToDo_Item=items[fromPosition].copy()
+        if(fromPosition < toPosition) {
+            for(i in fromPosition until toPosition) {
+                items[i]=items[i+1]
+            }
+        } else {
+            for(i in toPosition until fromPosition) {
+                items[i+1]=items[i]
+            }
+        }
+        items[toPosition]=item
+        notifyItemMoved(fromPosition, toPosition)
     }
 }
