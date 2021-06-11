@@ -51,7 +51,7 @@ class AddActivity : AppCompatActivity() {
                 val newToDoItem: ToDo_Item= ToDo_Item(
                     binding.titleInput.text.toString(),
                     SimpleDateFormat("yyyy-MM-dd").parse(binding.startDateInput.text.toString()).time/1000,
-                    SimpleDateFormat("yyyy-MM-dd").parse(binding.endDateInput.text.toString()).time/1000
+                    SimpleDateFormat("yyyy-MM-dd").parse(binding.endDateInput.text.toString()).time/1000,
                 )
                 todoItemDb?.todo_Item_Dao()?.insert(newToDoItem)
             }

@@ -1,5 +1,6 @@
 package com.yhcoding.testtodo
 
+import android.content.ClipData
 import android.os.Build
 import android.system.Os.bind
 import android.view.LayoutInflater
@@ -7,12 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.yhcoding.testtodo.databinding.TodoItemBinding
 import java.time.Instant
 import java.time.ZoneId
 
-class ToDo_Item_Adapter(private val items:ArrayList<ToDo_Item>) : RecyclerView.Adapter<ToDo_Item_Adapter.ToDo_Item_ViewHolder>(){
+class ToDo_Item_Adapter(private val items:ArrayList<ToDo_Item>) : RecyclerView.Adapter<ToDo_Item_Adapter.ToDo_Item_ViewHolder>(), ItemTouchHelperListener{
     class ToDo_Item_ViewHolder(val binding: TodoItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun getItemCount(): Int = items.size
@@ -33,18 +35,16 @@ class ToDo_Item_Adapter(private val items:ArrayList<ToDo_Item>) : RecyclerView.A
         return ToDo_Item_ViewHolder(binding)
     }
 
-    fun swapItems(fromPosition:Int, toPosition:Int) {
-        val item:ToDo_Item=items[fromPosition].copy()
-        if(fromPosition < toPosition) {
-            for(i in fromPosition until toPosition) {
-                items[i]=items[i+1]
-            }
-        } else {
-            for(i in toPosition until fromPosition) {
-                items[i+1]=items[i]
-            }
-        }
-        items[toPosition]=item
+    override fun onItemMove(fromPosition:Int, toPosition: Int):Boolean {
+        var todoItem:ToDo_Item = items.get(fromPosition)
+        items.removeAt(fromPosition)
+        items.add(toPosition, todoItem)
         notifyItemMoved(fromPosition, toPosition)
+        return true
+    }
+
+    override fun onItemSwipe(position: Int) {
+        items.removeAt(position)
+        notifyItemRemoved(position)
     }
 }
