@@ -5,18 +5,13 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextUtils
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.yhcoding.testtodo.databinding.ActivityAddBinding
-import com.yhcoding.testtodo.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.time.Instant
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class AddActivity : AppCompatActivity() {
@@ -39,28 +34,27 @@ class AddActivity : AppCompatActivity() {
 
         binding.startDateInput.setOnClickListener {
             val dpd=DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDay ->
-                binding.startDateInput.setText(""+mYear+"-"+(mMonth+1)+"-"+mDay)
-            }, year, month, day)
+                    binding.startDateInput.text = "" + mYear + "-" + (mMonth + 1) + "-" + mDay
+                }, year, month, day)
             dpd.show()
         }
         binding.endDateInput.setOnClickListener {
             val dpd=DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDay ->
-                binding.endDateInput.setText(""+mYear+"-"+(mMonth+1)+"-"+mDay)
+                binding.endDateInput.text = ""+mYear+"-"+(mMonth+1)+"-"+mDay
             }, year, month, day)
             dpd.show()
         }
         binding.saveBtn.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
-                val newToDoItem: ToDo_Item= ToDo_Item(
+                val newToDoItem= ToDo_Item(
                     binding.titleInput.text.toString(),
                     when(binding.startDateInput.text.toString().length) {
                         0 -> Instant.now().epochSecond
-                        else -> SimpleDateFormat("yyyy-MM-dd").parse(binding.startDateInput.text.toString()).time/1000
-
+                        else -> SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(binding.startDateInput.text.toString()).time/1000
                     },
                     when(binding.endDateInput.text.toString().length) {
                         0 -> Instant.now().epochSecond
-                        else -> SimpleDateFormat("yyyy-MM-dd").parse(binding.endDateInput.text.toString()).time / 1000
+                        else -> SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(binding.endDateInput.text.toString()).time / 1000
                     },
                     size
                 )
