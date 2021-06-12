@@ -39,10 +39,19 @@ class ToDo_Item_Adapter(private val items:ArrayList<ToDo_Item>, db: ToDo_Item_DB
         return ToDo_Item_ViewHolder(binding)
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onItemMove(fromPosition:Int, toPosition: Int):Boolean {
         val todoItem:ToDo_Item = items.get(fromPosition)
-        items.removeAt(fromPosition)
-        items.add(toPosition, todoItem)
+        if(fromPosition>toPosition) {
+            for(i in toPosition until fromPosition) {
+                items[i+1]=items[i]
+            }
+        } else {
+            for(i in fromPosition until toPosition) {
+                items[i]=items[i+1]
+            }
+        }
+        items[toPosition]=todoItem
         notifyItemMoved(fromPosition, toPosition)
         return true
     }
@@ -50,10 +59,12 @@ class ToDo_Item_Adapter(private val items:ArrayList<ToDo_Item>, db: ToDo_Item_DB
     fun updateDb() {
         var tmp:ToDo_Item_Dao.ItemForSeqUpdate
         CoroutineScope(Dispatchers.IO).launch {
-            for((i,value) in items.withIndex()) {
-                tmp= ToDo_Item_Dao.ItemForSeqUpdate(value.id, i)
-//                tmp=value.copy(order = i)
-                todoItemDb?.todo_Item_Dao()!!.updateSeq(tmp)
+            val it=items.iterator()
+            var index=0
+            while(it.hasNext()) {
+                val item = it.next()
+                todoItemDb?.todo_Item_Dao()!!.updateSeq(ToDo_Item_Dao.ItemForSeqUpdate(item.id, index))
+                index++
             }
         }
     }
