@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.yhcoding.testtodo.databinding.ActivityAddBinding
 import kotlinx.coroutines.CoroutineScope
@@ -48,20 +49,27 @@ class AddActivity : AppCompatActivity() {
         binding.saveBtn.setOnClickListener {
             if(TextUtils.isEmpty(binding.titleInput.text.toString())) {
                 binding.titleInput.error = "내용을 입력하세요."
+                val errorMessage = Toast.makeText(this, "할 일이 작성되지 않았습니다.", Toast.LENGTH_SHORT)
+                errorMessage.show()
+
+                return@setOnClickListener
+            }
+            val startDate = when(binding.startDateInput.text.toString().length) {
+                0 -> Instant.now().epochSecond
+                else -> SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(binding.startDateInput.text.toString()).time/1000
+            }
+            val endDate = when(binding.endDateInput.text.toString().length) {
+                0 -> Instant.now().epochSecond
+                else -> SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(binding.endDateInput.text.toString()).time / 1000
+            }
+            if(startDate>endDate) {
+                val errorMessage = Toast.makeText(this, "끝 날짜가 시작 날짜보다 이릅니다.", Toast.LENGTH_SHORT)
+                errorMessage.show()
                 return@setOnClickListener
             }
             CoroutineScope(Dispatchers.IO).launch {
                 val newToDoItem= ToDo_Item(
-                    binding.titleInput.text.toString(),
-                    when(binding.startDateInput.text.toString().length) {
-                        0 -> Instant.now().epochSecond
-                        else -> SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(binding.startDateInput.text.toString()).time/1000
-                    },
-                    when(binding.endDateInput.text.toString().length) {
-                        0 -> Instant.now().epochSecond
-                        else -> SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(binding.endDateInput.text.toString()).time / 1000
-                    },
-                    size
+                    binding.titleInput.text.toString(), startDate, endDate, size
                 )
                 todoItemDb?.todo_Item_Dao()?.insert(newToDoItem)
             }

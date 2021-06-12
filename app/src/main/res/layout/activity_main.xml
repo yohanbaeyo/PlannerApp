@@ -41,10 +41,13 @@
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        app:srcCompat="@android:drawable/ic_menu_add"
         android:layout_gravity="bottom|end"
-        android:layout_margin="3dp"
-        app:fabCustomSize="80dp"/>
+        android:layout_margin="16dp"
+        android:clickable="true"
+        app:backgroundTint="#009688"
+        app:fabCustomSize="56dp"
+        app:maxImageSize="24dp"
+        app:srcCompat="@android:drawable/ic_input_add"
+        app:tint="@android:color/white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
