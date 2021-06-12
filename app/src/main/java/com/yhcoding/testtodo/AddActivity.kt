@@ -33,6 +33,7 @@ class AddActivity : AppCompatActivity() {
         val year=c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
+        val size = intent.getIntExtra("size",0)
 
         binding.startDateInput.setOnClickListener {
             val dpd=DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDay ->
@@ -52,6 +53,7 @@ class AddActivity : AppCompatActivity() {
                     binding.titleInput.text.toString(),
                     SimpleDateFormat("yyyy-MM-dd").parse(binding.startDateInput.text.toString()).time/1000,
                     SimpleDateFormat("yyyy-MM-dd").parse(binding.endDateInput.text.toString()).time/1000,
+                    size
                 )
                 todoItemDb?.todo_Item_Dao()?.insert(newToDoItem)
             }

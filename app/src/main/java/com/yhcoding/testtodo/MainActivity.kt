@@ -20,10 +20,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var todoItems = ArrayList<ToDo_Item>()
     private var todoItemDb:ToDo_Item_DB? = null
-    private var adapter = ToDo_Item_Adapter(todoItems)
-    private var touchHelper = ItemTouchHelper(ItemTouchHelperCallback(adapter))
-
-    var n:Int=4
+    private lateinit var adapter:ToDo_Item_Adapter
+    private lateinit var touchHelper:ItemTouchHelper
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,11 +29,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        todoItemDb = ToDo_Item_DB.getInstance(this)
+        adapter = ToDo_Item_Adapter(todoItems, todoItemDb)
+        touchHelper = ItemTouchHelper(ItemTouchHelperCallback(adapter))
+
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
         touchHelper.attachToRecyclerView(binding.recyclerView)
 
-        todoItemDb = ToDo_Item_DB.getInstance(this)
         refreshRecyclerView()
 
         val actionBar: ActionBar? = supportActionBar
@@ -43,6 +44,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.floatingActionButton.setOnClickListener {
             val intent = Intent(this, AddActivity::class.java)
+            intent.putExtra("size", todoItems.size)
             startActivity(intent)
         }
     }

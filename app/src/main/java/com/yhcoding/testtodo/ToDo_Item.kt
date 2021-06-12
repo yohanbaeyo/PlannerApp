@@ -10,6 +10,6 @@ data class ToDo_Item(
     @ColumnInfo val title:String,
     @ColumnInfo val startDate: Long,
     @ColumnInfo val endDate:Long,
-    ) {
+    @ColumnInfo val order:Int,
     @PrimaryKey(autoGenerate = true)var id: Long = 0
-}
+    )

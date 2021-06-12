@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [ToDo_Item::class], version = 1)
+@Database(entities = [ToDo_Item::class], version = 2)
 abstract class ToDo_Item_DB :RoomDatabase() {
     abstract fun todo_Item_Dao() : ToDo_Item_Dao
 

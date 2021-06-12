@@ -3,6 +3,9 @@ package com.yhcoding.testtodo
 import android.content.Context
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ItemTouchHelperCallback(listener:ItemTouchHelperListener) : ItemTouchHelper.Callback(){
     private var listener:ItemTouchHelperListener=listener
@@ -30,5 +33,17 @@ class ItemTouchHelperCallback(listener:ItemTouchHelperListener) : ItemTouchHelpe
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         listener.onItemSwipe(viewHolder.adapterPosition)
+    }
+
+    override fun onMoved(
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder,
+        fromPos: Int,
+        target: RecyclerView.ViewHolder,
+        toPos: Int,
+        x: Int,
+        y: Int
+    ) {
+        listener.onItemMoved(fromPos, toPos)
     }
 }
