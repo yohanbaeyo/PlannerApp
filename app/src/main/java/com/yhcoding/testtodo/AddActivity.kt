@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import androidx.annotation.RequiresApi
 import com.yhcoding.testtodo.databinding.ActivityAddBinding
 import kotlinx.coroutines.CoroutineScope
@@ -45,6 +46,10 @@ class AddActivity : AppCompatActivity() {
             dpd.show()
         }
         binding.saveBtn.setOnClickListener {
+            if(TextUtils.isEmpty(binding.titleInput.text.toString())) {
+                binding.titleInput.error = "내용을 입력하세요."
+                return@setOnClickListener
+            }
             CoroutineScope(Dispatchers.IO).launch {
                 val newToDoItem= ToDo_Item(
                     binding.titleInput.text.toString(),
