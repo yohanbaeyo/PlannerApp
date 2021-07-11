@@ -6,13 +6,13 @@
     <data>
         <variable
             name="todo_item"
-            type="com.yhcoding.testtodo.ToDo_Item" />
+            type="com.yhcoding.plannerapp.GoalItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/todo_item"
+        android:background="@drawable/goal_item"
         android:layout_margin="10dp">
 
         <TextView

@@ -1,29 +1,21 @@
-package com.yhcoding.testtodo
+package com.yhcoding.plannerapp
 
-import android.content.ClipData
-import android.content.Context
 import android.os.Build
-import android.system.Os.bind
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.yhcoding.testtodo.databinding.TodoItemBinding
+import com.yhcoding.plannerapp.databinding.GoalItemBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.ZoneId
-import java.util.*
 import kotlin.collections.ArrayList
 
-class ToDo_Item_Adapter(private val items:ArrayList<ToDo_Item>, db: ToDo_Item_DB?) : RecyclerView.Adapter<ToDo_Item_Adapter.ToDo_Item_ViewHolder>(), ItemTouchHelperListener{
-    class ToDo_Item_ViewHolder(val binding: TodoItemBinding) : RecyclerView.ViewHolder(binding.root)
-    private val todoItemDb:ToDo_Item_DB? = db
+class GoalItemAdapter(private val items:ArrayList<GoalItem>, db: GoalItemDB?) : RecyclerView.Adapter<GoalItemAdapter.ToDo_Item_ViewHolder>(), ItemTouchHelperListener{
+    class ToDo_Item_ViewHolder(val binding: GoalItemBinding) : RecyclerView.ViewHolder(binding.root)
+    private val todoItemDb:GoalItemDB? = db
 
     override fun getItemCount(): Int = items.size
 
@@ -35,13 +27,13 @@ class ToDo_Item_Adapter(private val items:ArrayList<ToDo_Item>, db: ToDo_Item_DB
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToDo_Item_ViewHolder{
-        val binding = TodoItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = GoalItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ToDo_Item_ViewHolder(binding)
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onItemMove(fromPosition:Int, toPosition: Int):Boolean {
-        val todoItem:ToDo_Item = items.get(fromPosition)
+        val todoItem:GoalItem = items.get(fromPosition)
         if(fromPosition>toPosition) {
             for(i in toPosition until fromPosition) {
                 items[i+1]=items[i]
@@ -57,13 +49,13 @@ class ToDo_Item_Adapter(private val items:ArrayList<ToDo_Item>, db: ToDo_Item_DB
     }
 
     fun updateDb() {
-        var tmp:ToDo_Item_Dao.ItemForSeqUpdate
+        var tmp:GoalItemDao.ItemForSeqUpdate
         CoroutineScope(Dispatchers.IO).launch {
             val it=items.iterator()
             var index=0
             while(it.hasNext()) {
                 val item = it.next()
-                todoItemDb?.todo_Item_Dao()!!.updateSeq(ToDo_Item_Dao.ItemForSeqUpdate(item.id, index))
+                todoItemDb?.todo_Item_Dao()!!.updateSeq(GoalItemDao.ItemForSeqUpdate(item.id, index))
                 index++
             }
         }

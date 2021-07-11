@@ -1,4 +1,4 @@
-package com.yhcoding.testtodo
+package com.yhcoding.plannerapp
 
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.yhcoding.testtodo
+package com.yhcoding.plannerapp
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

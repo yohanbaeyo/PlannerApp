@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.yhcoding.testtodo">
+    package="com.yhcoding.plannerapp">
 
     <application
         android:allowBackup="true"
@@ -8,9 +8,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.TestToDo">
-        <activity android:name=".AddActivity"/>
-        <activity android:name=".MainActivity">
+        android:theme="@style/Theme.PlannerApp">
+        <activity android:name="com.yhcoding.plannerapp.AddActivity"/>
+        <activity android:name="com.yhcoding.plannerapp.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,11 +1,7 @@
-package com.yhcoding.testtodo
+package com.yhcoding.plannerapp
 
-import android.content.Context
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class ItemTouchHelperCallback(listener:ItemTouchHelperListener) : ItemTouchHelper.Callback(){
     private var listener:ItemTouchHelperListener=listener

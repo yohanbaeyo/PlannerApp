@@ -1,4 +1,4 @@
-package com.yhcoding.testtodo
+package com.yhcoding.plannerapp
 
 import android.app.DatePickerDialog
 import android.content.Intent
@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import com.yhcoding.testtodo.databinding.ActivityAddBinding
+import com.yhcoding.plannerapp.databinding.ActivityAddBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,7 +18,7 @@ import java.util.*
 
 class AddActivity : AppCompatActivity() {
     private lateinit var binding:ActivityAddBinding
-    private var todoItemDb:ToDo_Item_DB? = null
+    private var todoItemDb:GoalItemDB? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +26,7 @@ class AddActivity : AppCompatActivity() {
         binding = ActivityAddBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        todoItemDb=ToDo_Item_DB.getInstance(this)
+        todoItemDb=GoalItemDB.getInstance(this)
 
         val c=Calendar.getInstance()
         val year=c.get(Calendar.YEAR)
@@ -68,7 +68,7 @@ class AddActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             CoroutineScope(Dispatchers.IO).launch {
-                val newToDoItem= ToDo_Item(
+                val newToDoItem= GoalItem(
                     binding.titleInput.text.toString(), startDate, endDate, size
                 )
                 todoItemDb?.todo_Item_Dao()?.insert(newToDoItem)

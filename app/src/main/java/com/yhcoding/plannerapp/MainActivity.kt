@@ -1,4 +1,4 @@
-package com.yhcoding.testtodo
+package com.yhcoding.plannerapp
 
 import android.content.Intent
 import android.os.Build
@@ -8,19 +8,17 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.yhcoding.testtodo.databinding.ActivityMainBinding
+import com.yhcoding.plannerapp.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.time.Instant
-import java.time.LocalDate
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private var todoItems = ArrayList<ToDo_Item>()
-    private var todoItemDb:ToDo_Item_DB? = null
-    private lateinit var adapter:ToDo_Item_Adapter
+    private var todoItems = ArrayList<GoalItem>()
+    private var todoItemDb:GoalItemDB? = null
+    private lateinit var adapter:GoalItemAdapter
     private lateinit var touchHelper:ItemTouchHelper
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -29,8 +27,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        todoItemDb = ToDo_Item_DB.getInstance(this)
-        adapter = ToDo_Item_Adapter(todoItems, todoItemDb)
+        todoItemDb = GoalItemDB.getInstance(this)
+        adapter = GoalItemAdapter(todoItems, todoItemDb)
         touchHelper = ItemTouchHelper(ItemTouchHelperCallback(adapter))
 
         binding.recyclerView.adapter = adapter
